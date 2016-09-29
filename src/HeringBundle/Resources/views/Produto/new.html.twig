@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme form 'bootstrap_3_horizontal_layout.html.twig'%}
+
+{% block body %}
+    <div class="container">
+    <h1>Cadastro Produto</h1>
+    <hr>
+    <div class="col-md-6">
+        
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <input class="btn btn-primary" type="submit" value="Cadastrar"/>
+    {{ form_end(form) }}
+    </div>
+    </div>
+{% endblock %}
