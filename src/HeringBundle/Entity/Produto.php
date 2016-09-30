@@ -3,6 +3,7 @@
 namespace HeringBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity
@@ -18,6 +19,10 @@ class Produto {
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Type(
+     *     type="alpha",
+     *     message="Permitido apenas nomes com letras."
+     * )
      */
     private $nome;
 
@@ -26,9 +31,19 @@ class Produto {
      */
     private $tamanho;
 
-    /**
-     * @ORM\Column(type="decimal", scale=2)
+    /**    
+     * @Assert\Type(
+     *     type="decimal",
+     *     message="O valor está incorreto."
+     * )
+     
+     * @Assert\GreaterThanOrEqual(
+     *     value = 0,
+     *     message="O valor dever maior ou igual a zero."
+     * ) 
+     *  @ORM\Column(type="decimal", scale=2)
      */
+     
     private $valor;
     
     /**
@@ -41,6 +56,11 @@ class Produto {
      */
     private $quantidade;
     
+    /**
+     * @ORM\ManyToOne(targetEntity="Marca")
+     * @ORM\JoinColumn(name="marca_id", referencedColumnName="id")
+     */
+    private $marca;
 
 
     /**
@@ -185,5 +205,29 @@ class Produto {
     public function getQuantidade()
     {
         return $this->quantidade;
+    }
+
+    /**
+     * Set marca
+     *
+     * @param \HeringBundle\Entity\Marca $marca
+     *
+     * @return Produto
+     */
+    public function setMarca(\HeringBundle\Entity\Marca $marca = null)
+    {
+        $this->marca = $marca;
+
+        return $this;
+    }
+
+    /**
+     * Get marca
+     *
+     * @return \HeringBundle\Entity\Marca
+     */
+    public function getMarca()
+    {
+        return $this->marca;
     }
 }
