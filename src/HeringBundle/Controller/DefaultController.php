@@ -14,4 +14,12 @@ class DefaultController extends Controller
     {
         return $this->render('HeringBundle:Default:index.html.twig');
     }
+    
+    /**
+     * @Route("/caixa2",name="frente_caixa")
+     */
+    public function caixaAction()
+    {
+        return $this->render('HeringBundle:Default:caixa.html.twig');
+    }
 }
