@@ -45,4 +45,6 @@ class CaixaController extends Controller
             'caixa' => $caixa,
         ));
     }
+    
+    
 }

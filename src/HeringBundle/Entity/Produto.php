@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Entity
  * @ORM\Table(name="produto")
  */
-class Produto {
+class Produto implements \JsonSerializable {
 
     /**
      * @ORM\Column(type="integer")
@@ -31,37 +31,35 @@ class Produto {
      */
     private $tamanho;
 
-    /**    
+    /**
      * @Assert\Type(
      *     type="decimal",
      *     message="O valor está incorreto."
      * )
-     
+
      * @Assert\GreaterThanOrEqual(
      *     value = 0,
      *     message="O valor dever maior ou igual a zero."
      * ) 
      *  @ORM\Column(type="decimal", scale=2)
      */
-     
     private $valor;
-    
+
     /**
      * @ORM\Column(type="string", length=20)
      */
     private $modelo;
-    
+
     /**
      * @ORM\Column(type="integer")
      */
     private $quantidade;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Marca")
      * @ORM\JoinColumn(name="marca_id", referencedColumnName="id")
      */
     private $marca;
-
 
     /**
      * Set codigo
@@ -70,8 +68,7 @@ class Produto {
      *
      * @return Produto
      */
-    public function setCodigo($codigo)
-    {
+    public function setCodigo($codigo) {
         $this->codigo = $codigo;
 
         return $this;
@@ -82,8 +79,7 @@ class Produto {
      *
      * @return integer
      */
-    public function getCodigo()
-    {
+    public function getCodigo() {
         return $this->codigo;
     }
 
@@ -94,8 +90,7 @@ class Produto {
      *
      * @return Produto
      */
-    public function setNome($nome)
-    {
+    public function setNome($nome) {
         $this->nome = $nome;
 
         return $this;
@@ -106,8 +101,7 @@ class Produto {
      *
      * @return string
      */
-    public function getNome()
-    {
+    public function getNome() {
         return $this->nome;
     }
 
@@ -118,8 +112,7 @@ class Produto {
      *
      * @return Produto
      */
-    public function setTamanho($tamanho)
-    {
+    public function setTamanho($tamanho) {
         $this->tamanho = $tamanho;
 
         return $this;
@@ -130,8 +123,7 @@ class Produto {
      *
      * @return string
      */
-    public function getTamanho()
-    {
+    public function getTamanho() {
         return $this->tamanho;
     }
 
@@ -142,8 +134,7 @@ class Produto {
      *
      * @return Produto
      */
-    public function setValor($valor)
-    {
+    public function setValor($valor) {
         $this->valor = $valor;
 
         return $this;
@@ -154,8 +145,7 @@ class Produto {
      *
      * @return string
      */
-    public function getValor()
-    {
+    public function getValor() {
         return $this->valor;
     }
 
@@ -166,8 +156,7 @@ class Produto {
      *
      * @return Produto
      */
-    public function setModelo($modelo)
-    {
+    public function setModelo($modelo) {
         $this->modelo = $modelo;
 
         return $this;
@@ -178,8 +167,7 @@ class Produto {
      *
      * @return string
      */
-    public function getModelo()
-    {
+    public function getModelo() {
         return $this->modelo;
     }
 
@@ -190,8 +178,7 @@ class Produto {
      *
      * @return Produto
      */
-    public function setQuantidade($quantidade)
-    {
+    public function setQuantidade($quantidade) {
         $this->quantidade = $quantidade;
 
         return $this;
@@ -202,8 +189,7 @@ class Produto {
      *
      * @return integer
      */
-    public function getQuantidade()
-    {
+    public function getQuantidade() {
         return $this->quantidade;
     }
 
@@ -214,8 +200,7 @@ class Produto {
      *
      * @return Produto
      */
-    public function setMarca(\HeringBundle\Entity\Marca $marca = null)
-    {
+    public function setMarca(\HeringBundle\Entity\Marca $marca = null) {
         $this->marca = $marca;
 
         return $this;
@@ -226,8 +211,19 @@ class Produto {
      *
      * @return \HeringBundle\Entity\Marca
      */
-    public function getMarca()
-    {
+    public function getMarca() {
         return $this->marca;
     }
+
+    public function jsonSerialize() {
+        return array(
+            "codigo" => $this->codigo,
+            "nome" => $this->nome,
+            "valor" => $this->valor,
+            "modelo" => $this->modelo,
+            "tamanho" => $this->tamanho,
+            "marca" => $this->getMarca()->getNome()
+        );
+    }
+
 }

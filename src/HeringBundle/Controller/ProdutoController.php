@@ -6,6 +6,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 use HeringBundle\Entity\Produto;
 use HeringBundle\Form\ProdutoType;
 
@@ -73,6 +75,22 @@ class ProdutoController extends Controller
             'produto' => $produto,
             'delete_form' => $deleteForm->createView(),
         ));
+    }
+    
+    /**
+     * Exibe o produto como JSON
+     * @Route("/find", name="produto_find")
+     * @Method("POST")
+     */
+    public function findAction(Request $request)
+    {
+        $prodCod = $request->get('produto');
+
+        $em = $this->getDoctrine()->getManager();
+        $produto = $em->getRepository('HeringBundle:Produto')->find($prodCod);
+        
+        return new JsonResponse($produto); 
+        
     }
 
     /**

@@ -39,7 +39,7 @@ class CaixaItem {
     
     
     /**
-     * @ORM\ManyToOne(targetEntity="Caixa")
+     * @ORM\ManyToOne(targetEntity="Caixa",inversedBy="itens")
      * @ORM\JoinColumn(name="caixa_id", referencedColumnName="id")
      */
     private $caixa;
