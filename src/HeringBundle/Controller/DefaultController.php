@@ -2,6 +2,7 @@
 
 namespace HeringBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use HeringBundle\Entity\Caixa;
@@ -18,27 +19,19 @@ class DefaultController extends Controller {
     /**
      * @Route("/pdv",name="frente_caixa")
      */
-    public function pdvAction() {
+    public function pdvAction(Request $request) {
         $caixa = new Caixa();
         $caixa->setData(new \DateTime());
         $caixa->setStatus("ABERTO");
         $caixa->setUsuario('Teste');
         $caixa->setTotalPago(0);
 
-        $item = new \HeringBundle\Entity\CaixaItem();
-        $item->setCodigoItem(123456);
-        $item->setNumeroItem(1);
-        $item->setQuantidade(3);
-        $item->setValor(780);
-
         $em = $this->getDoctrine()->getManager();
         $em->persist($caixa);
         $em->flush();
         $em->refresh($caixa);
-        $item->setCaixa($caixa);
         
-        $em->persist($item);
-        $em->flush();
+        $request->getSession()->set('caixa_id',$caixa->getId());
        
         return $this->render('HeringBundle:Caixa:caixa.html.twig');
     }

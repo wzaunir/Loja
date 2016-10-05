@@ -6,7 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use \Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Doctrine\ORM\EntityRepository;
 
 class ProdutoType extends AbstractType
@@ -29,7 +30,7 @@ class ProdutoType extends AbstractType
                     ),
             ))
             ->add('valor')
-            ->add('modelo')
+            ->add('modelo')            
             ->add('quantidade')
             ->add('marca', EntityType::class,array(
                 'class'=>'HeringBundle:Marca',
@@ -38,6 +39,7 @@ class ProdutoType extends AbstractType
                             ->orderBy('u.nome','ASC');
                 }
             ))
+            ->add('imagem',  FileType::class)
         ;
     }
     

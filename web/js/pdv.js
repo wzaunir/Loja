@@ -14,7 +14,7 @@ $(document).ready(function() {
                 $('#produto .preco').text(retorno.valor);
                 $('#produto .marca').text(retorno.marca);
                 $('#produto .tamanho').text(retorno.tamanho);
-
+                $('#produto .imagem').attr('src','/produtos/'+retorno.imagem);
                 $('#produto').removeClass('hide');
                 
             } else {

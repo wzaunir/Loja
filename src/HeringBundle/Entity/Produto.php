@@ -20,7 +20,7 @@ class Produto implements \JsonSerializable {
     /**
      * @ORM\Column(type="string", length=100)
      * @Assert\Type(
-     *     type="alpha",
+     *     type="string",
      *     message="Permitido apenas nomes com letras."
      * )
      */
@@ -32,11 +32,6 @@ class Produto implements \JsonSerializable {
     private $tamanho;
 
     /**
-     * @Assert\Type(
-     *     type="decimal",
-     *     message="O valor está incorreto."
-     * )
-
      * @Assert\GreaterThanOrEqual(
      *     value = 0,
      *     message="O valor dever maior ou igual a zero."
@@ -60,6 +55,13 @@ class Produto implements \JsonSerializable {
      * @ORM\JoinColumn(name="marca_id", referencedColumnName="id")
      */
     private $marca;
+    
+    /**
+     * @ORM\Column(type="string", length=100)
+     * @Assert\Image()
+     */
+    private $imagem;
+    
 
     /**
      * Set codigo
@@ -222,8 +224,29 @@ class Produto implements \JsonSerializable {
             "valor" => $this->valor,
             "modelo" => $this->modelo,
             "tamanho" => $this->tamanho,
-            "marca" => $this->getMarca()->getNome()
+            "marca" => $this->getMarca()->getNome(),
+            "imagem" =>  $this->getImagem()
         );
     }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getImagem() {
+        return $this->imagem;
+    }
+
+    /**
+     * 
+     * @param string $imagem
+     * @return \HeringBundle\Entity\Produto
+     */
+    public function setImagem($imagem) {
+        $this->imagem = $imagem;
+        return $this;
+    }
+
+
 
 }
