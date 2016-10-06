@@ -3,6 +3,7 @@
 namespace HeringBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use HeringBundle\Entity\Caixa;
@@ -34,6 +35,45 @@ class DefaultController extends Controller {
         $request->getSession()->set('caixa_id',$caixa->getId());
        
         return $this->render('HeringBundle:Caixa:caixa.html.twig');
+    }
+    
+    /**
+     * Lista todos itens adicionados no carrinho
+     * @Route("/list-itens", name="caixa_list")
+     * @Method("GET")
+     * @param Request $request
+     */
+    public function listAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $caixaId = $request->getSession()->get('caixa_id');
+        
+        $caixa = $em->getRepository('HeringBundle:Caixa')->find($caixaId);
+        $itens = $caixa->getItens();
+        
+       return $this->json($itens->toArray());
+
+    }
+    
+    
+    /**
+     * Cancelar toda a compra
+     * @Route("/cancelar", name="caixa_cancelar")
+     * @Method("GET")
+     * @param Request $request
+     */
+    public function cancelarAction(Request $request) {
+        $em = $this->getDoctrine()->getManager();
+        $caixaId = $request->getSession()->get('caixa_id');
+        
+        $caixa = $em->getRepository('HeringBundle:Caixa')->find($caixaId);
+        $itens = $caixa->getItens();
+        
+        $caixa->setStatus('CANCELADO');
+        
+        $em->persist($caixa);
+        $em->flush();
+        return $this->redirectToRoute('frente_caixa');
+        
     }
 
 }

@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="caixa_item")
  */
-class CaixaItem {
+class CaixaItem implements \JsonSerializable {
 
     /**
      * @ORM\Column(type="integer")
@@ -36,22 +36,28 @@ class CaixaItem {
      *  @ORM\Column(type="decimal", scale=2)
      */
     private $valor;
-    
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="Caixa",inversedBy="itens")
      * @ORM\JoinColumn(name="caixa_id", referencedColumnName="id")
      */
     private $caixa;
 
+    public function jsonSerialize() {
+        return array(
+            "id" => $this->getId(),
+            "codigo" => $this->getCodigoItem(),
+            "valor" => $this->getValor(),
+            "quantidade" => $this->getQuantidade()
+        );
+    }
 
     /**
      * Get id
      *
      * @return integer
      */
-    public function getId()
-    {
+    public function getId() {
         return $this->id;
     }
 
@@ -62,8 +68,7 @@ class CaixaItem {
      *
      * @return CaixaItem
      */
-    public function setNumeroItem($numeroItem)
-    {
+    public function setNumeroItem($numeroItem) {
         $this->numeroItem = $numeroItem;
 
         return $this;
@@ -74,8 +79,7 @@ class CaixaItem {
      *
      * @return integer
      */
-    public function getNumeroItem()
-    {
+    public function getNumeroItem() {
         return $this->numeroItem;
     }
 
@@ -86,8 +90,7 @@ class CaixaItem {
      *
      * @return CaixaItem
      */
-    public function setCodigoItem($codigoItem)
-    {
+    public function setCodigoItem($codigoItem) {
         $this->codigoItem = $codigoItem;
 
         return $this;
@@ -98,8 +101,7 @@ class CaixaItem {
      *
      * @return integer
      */
-    public function getCodigoItem()
-    {
+    public function getCodigoItem() {
         return $this->codigoItem;
     }
 
@@ -110,8 +112,7 @@ class CaixaItem {
      *
      * @return CaixaItem
      */
-    public function setQuantidade($quantidade)
-    {
+    public function setQuantidade($quantidade) {
         $this->quantidade = $quantidade;
 
         return $this;
@@ -122,8 +123,7 @@ class CaixaItem {
      *
      * @return integer
      */
-    public function getQuantidade()
-    {
+    public function getQuantidade() {
         return $this->quantidade;
     }
 
@@ -134,8 +134,7 @@ class CaixaItem {
      *
      * @return CaixaItem
      */
-    public function setValor($valor)
-    {
+    public function setValor($valor) {
         $this->valor = $valor;
 
         return $this;
@@ -146,8 +145,7 @@ class CaixaItem {
      *
      * @return string
      */
-    public function getValor()
-    {
+    public function getValor() {
         return $this->valor;
     }
 
@@ -158,8 +156,7 @@ class CaixaItem {
      *
      * @return CaixaItem
      */
-    public function setCaixa(\HeringBundle\Entity\Caixa $caixa = null)
-    {
+    public function setCaixa(\HeringBundle\Entity\Caixa $caixa = null) {
         $this->caixa = $caixa;
 
         return $this;
@@ -170,8 +167,8 @@ class CaixaItem {
      *
      * @return \HeringBundle\Entity\Caixa
      */
-    public function getCaixa()
-    {
+    public function getCaixa() {
         return $this->caixa;
     }
+
 }

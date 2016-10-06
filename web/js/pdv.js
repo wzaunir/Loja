@@ -9,6 +9,7 @@ $(document).ready(function() {
         $('#produto').addClass('hide');
         $('#alerta-produto').addClass('hide');
         $.post(url, dados, function(retorno) {
+            
             if (retorno.nome != null) {
                 $('#produto .nome').text(retorno.nome);
                 $('#produto .preco').text(retorno.valor);
@@ -16,6 +17,8 @@ $(document).ready(function() {
                 $('#produto .tamanho').text(retorno.tamanho);
                 $('#produto .imagem').attr('src','/produtos/'+retorno.imagem);
                 $('#produto').removeClass('hide');
+                
+                listagemItens();
                 
             } else {
 
@@ -30,3 +33,24 @@ $(document).ready(function() {
 
 
 });
+function listagemItens(){
+    $.getJSON('/list-itens',function(retorno){
+        $('.listagem').empty();
+        var total = 0;
+        for( idx in retorno){
+            var produto = retorno[idx];
+            
+            var li = $('<li>'+produto.codigo+'<span class="pull-right">$'+produto.valor+'</span></li>');
+            $('.listagem').append(li);
+            
+            total += parseFloat(produto.valor);
+            
+        } 
+        
+        $(".total-pagar").html("R$ "+total.toFixed(2));
+      /*  $.each(retorno, function(idx, ret) {
+            $('.listagem').append('<li>' + ret.codigo+' '+ret.valor + '</li>');
+        });*/
+        
+    })
+}

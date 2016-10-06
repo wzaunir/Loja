@@ -36,11 +36,11 @@
 
     </div>
     <div class="col-md-8">
-        <div class="panel panel-primary">
+        <div id="lista-produtos" class="panel panel-primary">
             <div class="panel-heading">Total a Pagar:<span class="pull-right total-pagar">$0,00</span></div>
             <div class="panel-body">
-                <ol>
-                    <li>Produto x <span class="pull-right">$880,00</span></li>                    
+                <ol class="listagem">
+                    
                 </ol>
             </div>
             <div class="panel-footer">
@@ -66,7 +66,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
-                    <button type="button" class="btn btn-danger">Sim</button>
+                    <a href="{{ path('caixa_cancelar')}}" type="button" class="btn btn-danger">Sim</a>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
