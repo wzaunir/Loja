@@ -45,7 +45,6 @@ class CaixaController extends Controller {
         ));
     }
 
-
     /**
      * Estonar um ou mais itens adicionados no carrinho
      * @Route("/estorno/{numero}", name="caixa_estorno")
@@ -53,14 +52,30 @@ class CaixaController extends Controller {
      * @param Request $request
      */
     public function estornoAction(Request $request, $numero) {
-        
+
         $em = $this->getDoctrine()->getManager();
         $caixaId = $request->getSession()->get('caixa_id');
-        
+
         $caixa = $em->getRepository('HeringBundle:Caixa')->find($caixaId);
         $itens = $caixa->getItens();
         
-        return $this->json($itens->toArray());
+        $itemSel = $itens->get($numero - 1);
+
+        $novoItem = new CaixaItem();
+        $novoItem->setCaixa($caixa);
+        $novoItem->setCodigoItem('111111');
+        $novoItem->setNumeroItem(1);
+        $novoItem->setQuantidade(1);
+        $novoItem->setDescricao('Estorno Item:'.$numero);
+        $novoItem->setValor($itemSel->getValor() * -1);
+
+        $em->persist($novoItem);
+        $em->flush();
+        $retorno = array(
+            "status" => 'OK'
+        );
+
+        return $this->json($retorno);
     }
 
     /**
@@ -70,8 +85,7 @@ class CaixaController extends Controller {
      * @param Request $request
      */
     public function finalizarAction(Request $request) {
-              
+        
     }
-
 
 }

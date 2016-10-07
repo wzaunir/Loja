@@ -14,17 +14,19 @@ class DefaultController extends Controller {
      * @Route("/")
      */
     public function indexAction() {
-        return $this->render('HeringBundle:Default:index.html.twig');
+       // return $this->render('HeringBundle:Default:index.html.twig');
+        return $this->redirectToRoute('frente_caixa');
     }
 
     /**
      * @Route("/pdv",name="frente_caixa")
      */
     public function pdvAction(Request $request) {
+        $usuario = $this->getUser();
         $caixa = new Caixa();
         $caixa->setData(new \DateTime());
         $caixa->setStatus("ABERTO");
-        $caixa->setUsuario('Teste');
+        $caixa->setUsuario($usuario);
         $caixa->setTotalPago(0);
 
         $em = $this->getDoctrine()->getManager();

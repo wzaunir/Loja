@@ -36,6 +36,11 @@ class CaixaItem implements \JsonSerializable {
      *  @ORM\Column(type="decimal", scale=2)
      */
     private $valor;
+    
+    /**
+     *  @ORM\Column(type="string", scale=100)
+     */
+    private $descricao;
 
     /**
      * @ORM\ManyToOne(targetEntity="Caixa",inversedBy="itens")
@@ -48,9 +53,12 @@ class CaixaItem implements \JsonSerializable {
             "id" => $this->getId(),
             "codigo" => $this->getCodigoItem(),
             "valor" => $this->getValor(),
-            "quantidade" => $this->getQuantidade()
+            "quantidade" => $this->getQuantidade(),
+            "descricao" => $this->getDescricao()
         );
     }
+    
+    
 
     /**
      * Get id
@@ -170,5 +178,24 @@ class CaixaItem implements \JsonSerializable {
     public function getCaixa() {
         return $this->caixa;
     }
+    
+    /**
+     * 
+     * @return string
+     */
+    public function getDescricao() {
+        return $this->descricao;
+    }
+
+    /**
+     * 
+     * @param string $descricao
+     * @return \HeringBundle\Entity\CaixaItem
+     */
+    public function setDescricao($descricao) {
+        $this->descricao = $descricao;
+        return $this;
+    }
+
 
 }

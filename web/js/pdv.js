@@ -29,7 +29,18 @@ $(document).ready(function() {
 
         });
     });
-
+    $('#form-estorno').submit(function(e){
+       e.preventDefault();
+       var url = 'caixa/estorno/'+$('#item-numero').val();
+       $.getJSON(url,function(retorno){
+           
+           if(retorno.status == 'OK'){
+               
+               listagemItens();
+               $("#estornar").modal('hide');
+           }
+       })
+    });
 
 
 });
@@ -40,7 +51,7 @@ function listagemItens(){
         for( idx in retorno){
             var produto = retorno[idx];
             
-            var li = $('<li>'+produto.codigo+'<span class="pull-right">$'+produto.valor+'</span></li>');
+            var li = $('<li>'+produto.descricao+'<span class="pull-right">$'+produto.valor+'</span></li>');
             $('.listagem').append(li);
             
             total += parseFloat(produto.valor);

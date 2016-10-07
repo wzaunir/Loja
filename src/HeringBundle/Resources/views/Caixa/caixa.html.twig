@@ -40,11 +40,11 @@
             <div class="panel-heading">Total a Pagar:<span class="pull-right total-pagar">$0,00</span></div>
             <div class="panel-body">
                 <ol class="listagem">
-                    
+
                 </ol>
             </div>
             <div class="panel-footer">
-                <button type="button" class="btn btn-warning">Estornar Produto</button>
+                <button type="button" class="btn btn-warning"  data-toggle="modal" data-target="#estornar">Estornar Produto</button>
                 <button type="button" class="btn btn-primary">Finalizar Compra</button>
                 <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#cancelar">Cancelar Compra</button>
 
@@ -55,6 +55,7 @@
     <div id="cancelar" class="modal fade" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
+
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title">Cancelar Compra</h4>
@@ -71,6 +72,31 @@
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
+
+    <div id="estornar" class="modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <form id="form-estorno" action="/caixa/estorno">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Estornar Item</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label>Item No.:</label>
+                            <input type="text" class="form-control" name="item-numero" id="item-numero" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-success" data-dismiss="modal">Não</button>
+                        <button type="sumbit" class="btn btn-danger">Sim</button>
+                        
+                    </div>
+                </div>
+            </form>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 
 {%endblock%}
