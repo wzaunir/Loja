@@ -41,6 +41,19 @@ $(document).ready(function() {
            }
        })
     });
+    
+    $('#form-finalizar').submit(function(e){
+       e.preventDefault();
+       var url = 'caixa/finalizar';
+       $.getJSON(url,function(retorno){
+           
+           if(retorno.status == 'OK'){
+               
+               listagemItens();
+               $("#estornar").modal('hide');
+           }
+       })
+    });
 
 
 });
